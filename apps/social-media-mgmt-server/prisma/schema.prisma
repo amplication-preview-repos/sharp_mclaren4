@@ -1,0 +1,78 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  firstName      String?
+  lastName       String?
+  username       String      @unique
+  email          String?     @unique
+  password       String
+  roles          Json
+  passwordHash   String?
+  isActive       Boolean?
+  dashboards     Dashboard[]
+  posts          Post[]
+  messages       Message[]
+  analyticsItems Analytics[]
+}
+
+model Post {
+  id           String            @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  scheduleDate DateTime?
+  content      String?
+  platform     EnumPostPlatform?
+  user         User?             @relation(fields: [userId], references: [id])
+  userId       String?           @db.ObjectId
+}
+
+model Dashboard {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  socialMediaAccounts Json?
+  engagementRates     Json?
+  postPerformance     Json?
+  followerGrowth      Json?
+  user                User?    @relation(fields: [userId], references: [id])
+  userId              String?  @db.ObjectId
+}
+
+model Analytics {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  basicMetrics   Json?
+  reportTemplate Json?
+  user           User?    @relation(fields: [userId], references: [id])
+  userId         String?  @db.ObjectId
+}
+
+model Message {
+  id                String               @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  platform          EnumMessagePlatform?
+  automatedResponse Boolean?
+  content           String?
+  user              User?                @relation(fields: [userId], references: [id])
+  userId            String?              @db.ObjectId
+}
+
+enum EnumPostPlatform {
+  Option1
+}
+
+enum EnumMessagePlatform {
+  Option1
+}
