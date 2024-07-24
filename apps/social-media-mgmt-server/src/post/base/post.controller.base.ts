@@ -240,4 +240,38 @@ export class PostControllerBase {
       throw error;
     }
   }
+
+  @common.Post("/posts/publish")
+  @swagger.ApiOkResponse({
+    type: Post,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async PublishPost(
+    @common.Body()
+    body: PostCreateInput
+  ): Promise<Post> {
+    return this.service.PublishPost(body);
+  }
+
+  @common.Post("/posts/schedule")
+  @swagger.ApiOkResponse({
+    type: Post,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async SchedulePost(
+    @common.Body()
+    body: PostCreateInput
+  ): Promise<Post> {
+    return this.service.SchedulePost(body);
+  }
 }

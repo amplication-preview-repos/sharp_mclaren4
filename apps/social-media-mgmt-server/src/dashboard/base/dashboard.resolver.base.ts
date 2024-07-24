@@ -177,4 +177,20 @@ export class DashboardResolverBase {
     }
     return result;
   }
+
+  @graphql.Query(() => Dashboard)
+  async GetAnalyticsDataForDashboard(
+    @graphql.Args()
+    args: string
+  ): Promise<Dashboard> {
+    return this.service.GetAnalyticsDataForDashboard(args);
+  }
+
+  @graphql.Query(() => Dashboard)
+  async GetDashboardForUser(
+    @graphql.Args()
+    args: string
+  ): Promise<Dashboard> {
+    return this.service.GetDashboardForUser(args);
+  }
 }

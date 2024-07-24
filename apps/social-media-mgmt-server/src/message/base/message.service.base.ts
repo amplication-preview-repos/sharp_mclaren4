@@ -15,6 +15,9 @@ import {
   Message as PrismaMessage,
   User as PrismaUser,
 } from "@prisma/client";
+import { MessageCountArgs } from "./MessageCountArgs";
+import { MessageCreateInput } from "./MessageCreateInput";
+import { Message } from "./Message";
 
 export class MessageServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -47,5 +50,11 @@ export class MessageServiceBase {
         where: { id: parentId },
       })
       .user();
+  }
+  async GetUserMessages(args: string): Promise<MessageCountArgs[]> {
+    throw new Error("Not implemented");
+  }
+  async SendAutomatedResponse(args: MessageCreateInput): Promise<Message> {
+    throw new Error("Not implemented");
   }
 }

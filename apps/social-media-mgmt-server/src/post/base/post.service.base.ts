@@ -11,6 +11,8 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { PrismaService } from "../../prisma/prisma.service";
 import { Prisma, Post as PrismaPost, User as PrismaUser } from "@prisma/client";
+import { PostCreateInput } from "./PostCreateInput";
+import { Post } from "./Post";
 
 export class PostServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -41,5 +43,11 @@ export class PostServiceBase {
         where: { id: parentId },
       })
       .user();
+  }
+  async PublishPost(args: PostCreateInput): Promise<Post> {
+    throw new Error("Not implemented");
+  }
+  async SchedulePost(args: PostCreateInput): Promise<Post> {
+    throw new Error("Not implemented");
   }
 }

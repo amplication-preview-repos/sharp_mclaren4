@@ -27,6 +27,7 @@ import { CreatePostArgs } from "./CreatePostArgs";
 import { UpdatePostArgs } from "./UpdatePostArgs";
 import { DeletePostArgs } from "./DeletePostArgs";
 import { User } from "../../user/base/User";
+import { PostCreateInput } from "./PostCreateInput";
 import { PostService } from "../post.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Post)
@@ -166,5 +167,21 @@ export class PostResolverBase {
       return null;
     }
     return result;
+  }
+
+  @graphql.Mutation(() => Post)
+  async PublishPost(
+    @graphql.Args()
+    args: PostCreateInput
+  ): Promise<Post> {
+    return this.service.PublishPost(args);
+  }
+
+  @graphql.Mutation(() => Post)
+  async SchedulePost(
+    @graphql.Args()
+    args: PostCreateInput
+  ): Promise<Post> {
+    return this.service.SchedulePost(args);
   }
 }

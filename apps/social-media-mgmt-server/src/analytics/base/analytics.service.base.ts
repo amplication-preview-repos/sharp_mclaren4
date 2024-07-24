@@ -15,6 +15,7 @@ import {
   Analytics as PrismaAnalytics,
   User as PrismaUser,
 } from "@prisma/client";
+import { Analytics } from "./Analytics";
 
 export class AnalyticsServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -57,5 +58,11 @@ export class AnalyticsServiceBase {
         where: { id: parentId },
       })
       .user();
+  }
+  async GenerateReport(args: string): Promise<Analytics> {
+    throw new Error("Not implemented");
+  }
+  async GetBasicMetrics(args: string): Promise<Analytics> {
+    throw new Error("Not implemented");
   }
 }

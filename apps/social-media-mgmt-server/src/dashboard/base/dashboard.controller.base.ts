@@ -248,4 +248,38 @@ export class DashboardControllerBase {
       throw error;
     }
   }
+
+  @common.Get("/dashboard/:dashboardId/analytics")
+  @swagger.ApiOkResponse({
+    type: Dashboard,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetAnalyticsDataForDashboard(
+    @common.Body()
+    body: string
+  ): Promise<Dashboard> {
+    return this.service.GetAnalyticsDataForDashboard(body);
+  }
+
+  @common.Get("/dashboard/user/:userId")
+  @swagger.ApiOkResponse({
+    type: Dashboard,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetDashboardForUser(
+    @common.Body()
+    body: string
+  ): Promise<Dashboard> {
+    return this.service.GetDashboardForUser(body);
+  }
 }

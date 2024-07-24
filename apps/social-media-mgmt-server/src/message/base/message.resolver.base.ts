@@ -27,6 +27,7 @@ import { CreateMessageArgs } from "./CreateMessageArgs";
 import { UpdateMessageArgs } from "./UpdateMessageArgs";
 import { DeleteMessageArgs } from "./DeleteMessageArgs";
 import { User } from "../../user/base/User";
+import { MessageCreateInput } from "./MessageCreateInput";
 import { MessageService } from "../message.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Message)
@@ -176,5 +177,21 @@ export class MessageResolverBase {
       return null;
     }
     return result;
+  }
+
+  @graphql.Query(() => [MessageCountArgs])
+  async GetUserMessages(
+    @graphql.Args()
+    args: string
+  ): Promise<MessageCountArgs[]> {
+    return this.service.GetUserMessages(args);
+  }
+
+  @graphql.Mutation(() => Message)
+  async SendAutomatedResponse(
+    @graphql.Args()
+    args: MessageCreateInput
+  ): Promise<Message> {
+    return this.service.SendAutomatedResponse(args);
   }
 }

@@ -22,6 +22,8 @@ import {
 
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
+import { UserCreateInput } from "./UserCreateInput";
+import { User } from "./User";
 
 export class UserServiceBase {
   constructor(
@@ -112,5 +114,11 @@ export class UserServiceBase {
         where: { id: parentId },
       })
       .analyticsItems(args);
+  }
+  async LoginUser(args: UserCreateInput): Promise<string> {
+    throw new Error("Not implemented");
+  }
+  async RegisterUser(args: UserCreateInput): Promise<User> {
+    throw new Error("Not implemented");
   }
 }

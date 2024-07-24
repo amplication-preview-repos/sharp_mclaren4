@@ -34,6 +34,7 @@ import { MessageFindManyArgs } from "../../message/base/MessageFindManyArgs";
 import { Message } from "../../message/base/Message";
 import { AnalyticsFindManyArgs } from "../../analytics/base/AnalyticsFindManyArgs";
 import { Analytics } from "../../analytics/base/Analytics";
+import { UserCreateInput } from "./UserCreateInput";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -218,5 +219,21 @@ export class UserResolverBase {
     }
 
     return results;
+  }
+
+  @graphql.Query(() => String)
+  async LoginUser(
+    @graphql.Args()
+    args: UserCreateInput
+  ): Promise<string> {
+    return this.service.LoginUser(args);
+  }
+
+  @graphql.Mutation(() => User)
+  async RegisterUser(
+    @graphql.Args()
+    args: UserCreateInput
+  ): Promise<User> {
+    return this.service.RegisterUser(args);
   }
 }

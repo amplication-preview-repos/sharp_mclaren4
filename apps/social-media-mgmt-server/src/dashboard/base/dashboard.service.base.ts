@@ -15,6 +15,7 @@ import {
   Dashboard as PrismaDashboard,
   User as PrismaUser,
 } from "@prisma/client";
+import { Dashboard } from "./Dashboard";
 
 export class DashboardServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -57,5 +58,11 @@ export class DashboardServiceBase {
         where: { id: parentId },
       })
       .user();
+  }
+  async GetAnalyticsDataForDashboard(args: string): Promise<Dashboard> {
+    throw new Error("Not implemented");
+  }
+  async GetDashboardForUser(args: string): Promise<Dashboard> {
+    throw new Error("Not implemented");
   }
 }

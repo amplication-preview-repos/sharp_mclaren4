@@ -177,4 +177,20 @@ export class AnalyticsResolverBase {
     }
     return result;
   }
+
+  @graphql.Query(() => Analytics)
+  async GenerateReport(
+    @graphql.Args()
+    args: string
+  ): Promise<Analytics> {
+    return this.service.GenerateReport(args);
+  }
+
+  @graphql.Query(() => Analytics)
+  async GetBasicMetrics(
+    @graphql.Args()
+    args: string
+  ): Promise<Analytics> {
+    return this.service.GetBasicMetrics(args);
+  }
 }

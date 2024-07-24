@@ -238,4 +238,38 @@ export class AnalyticsControllerBase {
       throw error;
     }
   }
+
+  @common.Get("/analytics/:id/report")
+  @swagger.ApiOkResponse({
+    type: Analytics,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GenerateReport(
+    @common.Body()
+    body: string
+  ): Promise<Analytics> {
+    return this.service.GenerateReport(body);
+  }
+
+  @common.Get("/analytics/:id/metrics")
+  @swagger.ApiOkResponse({
+    type: Analytics,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetBasicMetrics(
+    @common.Body()
+    body: string
+  ): Promise<Analytics> {
+    return this.service.GetBasicMetrics(body);
+  }
 }

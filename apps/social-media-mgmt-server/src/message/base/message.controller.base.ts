@@ -27,6 +27,7 @@ import { Post } from "../../post/base/Post";
 import { MessageFindManyArgs } from "./MessageFindManyArgs";
 import { MessageWhereUniqueInput } from "./MessageWhereUniqueInput";
 import { MessageUpdateInput } from "./MessageUpdateInput";
+import { MessageCountArgs } from "./MessageCountArgs";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -242,5 +243,39 @@ export class MessageControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/messages/user/:userId")
+  @swagger.ApiOkResponse({
+    type: MessageCountArgs,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetUserMessages(
+    @common.Body()
+    body: MessageCreateInput
+  ): Promise<MessageCountArgs[]> {
+    return this.service.GetUserMessages(body);
+  }
+
+  @common.Post("/messages/:messageId/respond")
+  @swagger.ApiOkResponse({
+    type: Message,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async SendAutomatedResponse(
+    @common.Body()
+    body: MessageCreateInput
+  ): Promise<Message> {
+    return this.service.SendAutomatedResponse(body);
   }
 }

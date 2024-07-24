@@ -642,4 +642,38 @@ export class UserControllerBase {
       select: { id: true },
     });
   }
+
+  @common.Post("/login")
+  @swagger.ApiOkResponse({
+    type: String,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async LoginUser(
+    @common.Body()
+    body: UserCreateInput
+  ): Promise<string> {
+    return this.service.LoginUser(body);
+  }
+
+  @common.Post("/register")
+  @swagger.ApiOkResponse({
+    type: User,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async RegisterUser(
+    @common.Body()
+    body: UserCreateInput
+  ): Promise<User> {
+    return this.service.RegisterUser(body);
+  }
 }
